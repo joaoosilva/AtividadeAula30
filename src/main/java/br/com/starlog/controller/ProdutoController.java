@@ -1,0 +1,36 @@
+package br.com.starlog.controller;
+
+import br.com.starlog.dao.ProdutoDAO;
+import br.com.starlog.model.Produto;
+import java.util.List;
+import java.util.Optional;
+
+public class ProdutoController {
+    private final ProdutoDAO dao;
+
+    public ProdutoController(ProdutoDAO dao) {
+        this.dao = dao;
+    }
+
+    public void cadastrar(String nome, double preco, int estoque) {
+        Produto produto = new Produto(nome, preco, estoque);
+        dao.salvar(produto);
+    }
+
+    public Optional<Produto> obterPorId(Long id) {
+        return dao.buscarPorId(id);
+    }
+
+    public List<Produto> obterTodos() {
+        return dao.listarTodos();
+    }
+
+    public boolean alterar(Long id, String nome, double preco, int estoque) {
+        Produto produto = new Produto(id, nome, preco, estoque);
+        return dao.atualizar(produto);
+    }
+
+    public boolean excluir(Long id) {
+        return dao.excluir(id);
+    }
+}
